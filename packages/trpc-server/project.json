@@ -1,0 +1,53 @@
+{
+  "name": "trpc-server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/trpc-server/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/packages/trpc-server",
+        "main": "packages/trpc-server/src/main.ts",
+        "tsConfig": "packages/trpc-server/tsconfig.app.json",
+        "assets": ["packages/trpc-server/src/assets"],
+        "webpackConfig": "packages/trpc-server/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "trpc-server:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "trpc-server:build:development"
+        },
+        "production": {
+          "buildTarget": "trpc-server:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/trpc-server/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
