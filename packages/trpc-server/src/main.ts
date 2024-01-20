@@ -6,10 +6,13 @@ import { appRouter,createContext } from '@org/backend/trpc-core';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import cors from 'cors'
 import express from 'express';
-
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { connectToDatabase } from '../../db/db';
 
 const app = express();
  
+connectToDatabase();
+
 app.use(
   cors({  
     origin:['http://localhost:4201'],
